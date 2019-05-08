@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * класс запуска приложения
  * поднимает спринг контекст
+ *
  * @author dkom91
  */
 @SpringBootApplication

@@ -1,4 +1,4 @@
-package dk.project.sweter;
+package dk.project.sweter.controller;
 
 import dk.project.sweter.domain.Message;
 import dk.project.sweter.repo.MessageRepo;
@@ -11,43 +11,49 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 /**
- * класс контроллер
+ * класс контроллер для главной страницы
+ * приложения
+ *
  * @author dkom91
  */
 @Controller
-public class GreetingController {
+public class MainController {
 
     @Autowired
     private MessageRepo messageRepo;
 
     @GetMapping("/")
-    public String greeting() {
-        return "greeting";
+    public String hello() {
+        return "hello";
     }
+
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
+
     @GetMapping("/main")
-    public String main(Map<String, Object> model){
+    public String main(Map<String, Object> model) {
         Iterable<Message> messages = messageRepo.findAll();
         model.put("messages", messages);
         return "main";
     }
+
     @PostMapping("/main")
-    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model){
+    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
         Message message = new Message(text, tag);
         messageRepo.save(message);
         Iterable<Message> messages = messageRepo.findAll();
         model.put("messages", messages);
         return "main";
     }
+
     @PostMapping("filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model){
+    public String filter(@RequestParam String filter, Map<String, Object> model) {
         Iterable<Message> messages;
-        if (filter != null && !filter.isEmpty()){
+        if (filter != null && !filter.isEmpty()) {
             messages = messageRepo.findByTag(filter);
-        }else {
+        } else {
             messages = messageRepo.findAll();
         }
         model.put("messages", messages);
